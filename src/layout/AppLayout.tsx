@@ -49,7 +49,7 @@ const StyledNavLink = styled(NavLink)(({theme}) => ({
   "&:hover": {
     color: theme.palette.text.primary
   },
-  "&:active": {
+  "&.active": {
     color: theme.palette.text.primary
   },
   "&:focus": {
@@ -63,7 +63,7 @@ const AppLayout = () => {
       <Sidebar>
         <ContentBox sx={{flex: 1, display: "flex", alignItems: "center"}}>
           <NavList>
-            <StyledNavLink to="/">
+            <StyledNavLink to="/" end>
               <HomeIcon />
               <Typography variant='h2' fontWeight={700}>Home</Typography>
             </StyledNavLink>
