@@ -1,8 +1,11 @@
 import React from 'react'
+import NewReleased from './components/NewReleased'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div>
+      <NewReleased />
+    </div>
   )
 }
 

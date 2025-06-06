@@ -4,6 +4,7 @@ import { Box, styled, Typography } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import Library from './components/Library';
+import Navbar from './components/Navbar';
 
 
 //styled components
@@ -78,7 +79,11 @@ const AppLayout = () => {
           <Library />
         </ContentBox>
       </Sidebar>
-      <Outlet/>
+
+      <ContentBox>
+        <Navbar />
+        <Outlet/>
+      </ContentBox>
     </Layout>
   )
 }
