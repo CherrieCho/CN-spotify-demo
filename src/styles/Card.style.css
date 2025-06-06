@@ -1,0 +1,34 @@
+.album-contents{
+  width: 100%;
+}
+
+.album-image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.album-img{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  display: block;
+}
+
+.album-text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.play-button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  transform: translate(0%, 0%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.album-image-wrapper:hover .play-button {
+  opacity: 1;
+}
