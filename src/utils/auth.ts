@@ -11,6 +11,7 @@ export const getSpotifyAuthUrl = async () => {
   const clientId = clientID;
   const redirectUri = REDIRECT_URI;
 
+  //로그인 시 현재 유저 정보 표시에 필요한 authorization scope
   const scope = 'user-read-private user-read-email';
   const authUrl = new URL("https://accounts.spotify.com/authorize")
 

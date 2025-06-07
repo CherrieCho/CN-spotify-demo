@@ -1,6 +1,6 @@
 //토큰 가져오는 훅
 import { useQuery } from "@tanstack/react-query";
-import { getClientCredentialToken } from "../apis/authApi.ts";
+import { getClientCredentialToken } from "../apis/authApi";
 
 const useClientCredentialToken = (): string | undefined => {
   const {data} = useQuery({

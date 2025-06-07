@@ -26,7 +26,7 @@ const AlbumBox = styled(Box)({
 
 const Card = ({image, name, artistName}: CardProps) => {
   return (
-    <AlbumBox>
+    <AlbumBox className='album-box'>
       <div className='album-contents'>
         <div className="album-image-wrapper">
           <img src={image} className="album-img" />

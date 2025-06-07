@@ -29,6 +29,6 @@
   transition: opacity 0.3s ease;
 }
 
-.album-image-wrapper:hover .play-button {
+.album-box:hover .play-button {
   opacity: 1;
 }
