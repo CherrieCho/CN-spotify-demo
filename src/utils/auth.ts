@@ -1,4 +1,4 @@
-import { clientID } from "../config/authConfig";
+import { clientID, SCOPES } from "../config/authConfig";
 import { REDIRECT_URI } from "../config/commonConfig";
 import { AuthUrlParams } from "../models/auth";
 import { base64encode, generateRandomString, sha256 } from "./crypto";
@@ -12,7 +12,7 @@ export const getSpotifyAuthUrl = async () => {
   const redirectUri = REDIRECT_URI;
 
   //로그인 시 현재 유저 정보 표시에 필요한 authorization scope
-  const scope = 'user-read-private user-read-email';
+  const scope = SCOPES;
   const authUrl = new URL("https://accounts.spotify.com/authorize")
 
   // generated in the previous step

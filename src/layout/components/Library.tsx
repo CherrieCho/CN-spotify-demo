@@ -2,6 +2,9 @@ import React from 'react'
 import LibraryHead from './LibraryHead'
 import EmptyPlaylist from './EmptyPlaylist'
 import { styled } from '@mui/material';
+import useGetCurrentUserPlaylist from '../../hooks/useGetCurrentUserPlaylist';
+import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
+import UserPlaylist from './UserPlaylist';
 
 const LibraryContainer = styled("div")({
   display: "flex",
@@ -13,10 +16,15 @@ const LibraryContainer = styled("div")({
 });
 
 const Library = () => {
+  //userProfile 불러오기
+  const {data: userProfile} = useGetCurrentUserProfile();
+  //플레이리스트 데이터
+  const {data, isLoading, error} = useGetCurrentUserPlaylist({limit: 10, offset: 0});
+  console.log("플레이리스트", data);
   return (
     <LibraryContainer>
       <LibraryHead />
-      <EmptyPlaylist />
+      {userProfile ? <UserPlaylist /> : <EmptyPlaylist />}
     </LibraryContainer>
   )
 }

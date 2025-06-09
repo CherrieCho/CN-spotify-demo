@@ -1,17 +1,10 @@
+import { ApiResponse } from "./apiResponse";
 import { Artist } from "./artist";
 import { ExternalUrls, Image, Restriction } from "./commonType";
 
 //response 정보
 export interface getNewReleaseResponse {
-  albums: {
-    href: string;
-    limit: number;
-    next: string;
-    offset: number;
-    previous: string | null;
-    total: number;
-    items: SimplifiedAlbum[]; 
-  };
+  albums: ApiResponse<SimplifiedAlbum>;
 }
 
 //앨범 정보
