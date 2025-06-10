@@ -29,6 +29,7 @@ const ContentBox = styled(Box)(({theme}) => ({
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   width: "100%",
+  height: "100%",
   padding: "8px",
   marginBottom: "8px",
   marginRight: "8px"
@@ -75,7 +76,7 @@ const AppLayout = () => {
           </NavList>
         </ContentBox>
 
-        <ContentBox sx={{flex: 8}}>
+        <ContentBox sx={{flex: 8, overflow: "hidden"}}>
           <Library />
         </ContentBox>
       </Sidebar>
