@@ -1,5 +1,5 @@
 import React from 'react'
-import { styled, Typography } from '@mui/material'
+import { Box, Button, styled, Typography } from '@mui/material'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -8,15 +8,19 @@ const PlaylistHeader = styled("div")(() => ({
   border: "none",
   display: "flex",
   alignItems: "center",
-  gap: "20px",
+  justifyContent: "space-between"
 }));
 
 const LibraryHead = () => {
   return (
     <PlaylistHeader>
-      <BookmarkIcon />
-      <Typography variant='h2' fontWeight={700}>Your Library</Typography>
-      <AddIcon sx={{ color: "#1ed760" }} />
+      <Box sx={{display: "flex", alignItems: "center", gap: "20px"}}>
+        <BookmarkIcon />
+        <Typography noWrap variant='h2' fontWeight={700}>Your Library</Typography>
+      </Box>
+      <Button>
+        <AddIcon sx={{ color: "#1ed760" }} />
+      </Button>
     </PlaylistHeader>
   )
 }

@@ -36,7 +36,7 @@ const ContentBox = styled(Box)(({theme}) => ({
 
 const NavList = styled("ul")({
   listStyle: "none",
-  padding: "1.5em",
+  padding: "1em",
   margin: 0,
 });
 
@@ -62,7 +62,7 @@ const AppLayout = () => {
   return (
     <Layout>
       <Sidebar>
-        <ContentBox sx={{flex: 1, display: "flex", alignItems: "center"}}>
+        <ContentBox sx={{flex: 0, display: "flex", alignItems: "center"}}>
           <NavList>
             <StyledNavLink to="/" end>
               <HomeIcon />
@@ -75,12 +75,12 @@ const AppLayout = () => {
           </NavList>
         </ContentBox>
 
-        <ContentBox sx={{flex: 7}}>
+        <ContentBox sx={{flex: 8}}>
           <Library />
         </ContentBox>
       </Sidebar>
 
-      <ContentBox>
+      <ContentBox sx={{padding: "20px", margin: "0px 8px"}}>
         <Navbar />
         <Outlet/>
       </ContentBox>

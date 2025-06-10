@@ -12,15 +12,12 @@ const LibraryContainer = styled("div")({
   gap: "2em",
   width: "100%",
   height: "100%",
-  padding: "1.5em"
+  padding: "1em"
 });
 
 const Library = () => {
   //userProfile 불러오기
   const {data: userProfile} = useGetCurrentUserProfile();
-  //플레이리스트 데이터
-  const {data, isLoading, error} = useGetCurrentUserPlaylist({limit: 10, offset: 0});
-  console.log("플레이리스트", data);
   return (
     <LibraryContainer>
       <LibraryHead />

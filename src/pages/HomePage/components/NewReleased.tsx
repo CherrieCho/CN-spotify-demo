@@ -7,7 +7,6 @@ import Card from '../../../common/components/Card';
 
 const NewReleased = () => {
   const {data, isLoading, error} = useGetNewRelease();
-  console.log("데이터", data?.albums.items);
 
   if(isLoading){
     return <Loading />
@@ -19,16 +18,18 @@ const NewReleased = () => {
 
   return (
     <div>
-      <Typography variant='h1' paddingTop='8px'>
+      <Typography variant='h1' paddingTop='8px' paddingLeft='16px'>
         New Released Albums
       </Typography>
 
       {data && data.albums.items.length > 0 ? (
-        <Grid container spacing={2}>{data.albums.items.map((album) => (
-          <Grid size={{xs: 6, sm:4, md:3, lg: 2}} key={album.id}>
+        <Grid container spacing={2}>
+          {data.albums.items.map((album) => (
+          <Grid size={{xs: 6, sm:4, md:3, lg: 2}} key={album.id} sx={{paddingTop: "16px", paddingLeft: "16px"}}>
             <Card image={album.images[0].url} name={album.name} artistName={album.artists[0].name} />
           </Grid>
-        ))}</Grid>
+          ))}
+        </Grid>
         ) : (
         <Typography variant='h2'>No Data</Typography>
         )}

@@ -12,6 +12,7 @@ interface CardProps{
 //styled components
 const AlbumBox = styled(Box)({
   width: "100%",
+  minWidth: "160px",
   borderRadius: "8px",
   display: "flex",
   flexDirection: "column",
@@ -19,7 +20,7 @@ const AlbumBox = styled(Box)({
   "&:hover": {
     backgroundColor: "#1E1E1E",
   },
-  padding: "1em",
+  padding: "12px"
 });
 
 //artistName undefined인 경우 처리해주기
@@ -29,11 +30,11 @@ const Card = ({image, name, artistName}: CardProps) => {
     <AlbumBox className='album-box'>
       <div className='album-contents'>
         <div className="album-image-wrapper">
-          <img src={image} className="album-img" />
+          <img src={image} className="album-img" alt='album-img'/>
           <PlayButton />
         </div>
-        <Typography noWrap className='album-text' fontWeight={700}>{name}</Typography>
-        <Typography noWrap className='album-text'>{artistName}</Typography>
+        <Typography noWrap className='album-text' variant='h2' fontWeight='300' paddingTop='8px'>{name}</Typography>
+        <Typography noWrap className='album-text' color='#b3b3b3' paddingTop='2px'>{artistName}</Typography>
       </div>
     </AlbumBox>
   )
