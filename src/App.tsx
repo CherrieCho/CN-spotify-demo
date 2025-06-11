@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router';
 import SearchKeywordPage from './pages/Search/SearchKeywordPage';
-import PlaylistPage from './pages/Playlist/PlaylistPage';
+import PlaylistDetailPage from './pages/Playlist/PlaylistDetailPage';
 import Loading from './common/components/Loading';
 import useExchangeToken from './hooks/useExchangeToken';
 
@@ -38,8 +38,7 @@ function App() {
         </Route>
 
         <Route path="playlist">
-          <Route index element={<PlaylistPage />} />
-          {/* <Route path=":id" element={<PlaylistDetail />} /> */}
+          <Route path=":id" element={<PlaylistDetailPage />} />
         </Route>
       </Route>
     </Routes>
