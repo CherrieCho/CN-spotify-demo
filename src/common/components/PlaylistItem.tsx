@@ -17,8 +17,7 @@ interface StyledProps {
 
 const PlaylistItemContainer = styled("div")<StyledProps>(({theme, isActive}) => ({
   width: "100%",
-  padding: "8px",
-  marginBottom: "10px",
+  padding: "12px",
   borderRadius: "8px",
   display: "flex",
   gap: "12px",

@@ -4,6 +4,7 @@ import { Box, styled } from '@mui/material';
 
 const HomepageContainer = styled(Box)({
   padding: "0 16px",
+  marginTop: "2em"
 });
 
 const HomePage = () => {

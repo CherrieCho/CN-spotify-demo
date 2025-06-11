@@ -26,7 +26,6 @@ const Library = () => {
     limit: 10,
     offset: 0,
   });
-  console.log("플레이리스트", data);
 
   //무한스크롤
   useEffect(() => {

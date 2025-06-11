@@ -10,7 +10,7 @@ export interface getNewReleaseResponse {
 //앨범 정보
 export interface SimplifiedAlbum {
   album_type: string;
-  total_tracks: string;
+  total_tracks: number;
   available_markets: string[];
   external_urls: ExternalUrls;
   href: string;

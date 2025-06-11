@@ -11,7 +11,7 @@ interface UserPlaylistProps {
 
 const UserPlaylist = ({playlists}: UserPlaylistProps) => {
   const navigate = useNavigate();
-  const { id: currentId } = useParams();
+  const { id: currentId } = useParams<{id: string}>();
   const handleClick = (id: string) => {
     navigate(`/playlist/${id}`);
   }
