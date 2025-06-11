@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from '@mui/material';
 import { SimplifiedPlaylist } from '../../models/playlist';
 import PlaylistItem from '../../common/components/PlaylistItem';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 //타입 정의
 interface UserPlaylistProps {
@@ -11,6 +11,7 @@ interface UserPlaylistProps {
 
 const UserPlaylist = ({playlists}: UserPlaylistProps) => {
   const navigate = useNavigate();
+  const { id: currentId } = useParams();
   const handleClick = (id: string) => {
     navigate(`/playlist/${id}`);
   }
@@ -28,6 +29,7 @@ const UserPlaylist = ({playlists}: UserPlaylistProps) => {
         id={playList.id || ""}
         key={playList.id}
         ownerName={playList.owner?.display_name}
+        isActive={currentId === playList.id}
       />
       ))}
     </Box>

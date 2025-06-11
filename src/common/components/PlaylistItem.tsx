@@ -2,25 +2,32 @@ import { styled, Typography } from '@mui/material';
 import React from 'react'
 import "../../styles/PlaylistItem.style.css";
 
-const PlaylistItemContainer = styled("div")(({theme}) => ({
+//타입 정의
+interface PlaylistItemProps {
+  image: string;
+  name: string;
+  ownerName?: string | null;
+  id: string;
+  handleClick: (id: string) => void;
+  isActive?: boolean;
+}
+interface StyledProps {
+  isActive?: boolean;
+}
+
+const PlaylistItemContainer = styled("div")<StyledProps>(({theme, isActive}) => ({
   width: "100%",
   padding: "8px",
   marginBottom: "10px",
   borderRadius: "8px",
   display: "flex",
   gap: "12px",
-  transition: "backgroundColor 0.3s",
+  cursor: "pointer",
+  backgroundColor: isActive ? "#1E1E1E" : "transparent",
+  color: isActive ? theme.palette.primary.main : "inherit",
   "&:hover": {
     backgroundColor: "#1E1E1E",
-    color: theme.palette.text.primary,
-  },
-  "&.active": {
-    backgroundColor: "#1E1E1E",
-    color: theme.palette.text.primary,
-  },
-  "&:focus": {
-    backgroundColor: "#1E1E1E",
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -40,41 +47,14 @@ const PlaylistInfo = styled("div")({
   overflow: "hidden"
 });
 
-interface PlaylistItemProps {
-  image: string;
-  name: string;
-  ownerName?: string | null;
-  id: string;
-  handleClick: (id: string) => void;
-}
-
-const PlaylistItem = ({name, image, id, ownerName, handleClick}: PlaylistItemProps) => {
+const PlaylistItem = ({name, image, id, ownerName, handleClick, isActive}: PlaylistItemProps) => {
   return (
-    <PlaylistItemContainer onClick={() => handleClick(id)}>
+    <PlaylistItemContainer isActive={isActive} onClick={() => handleClick(id)}>
         <PlaylistImgBox>
           <img src={image} alt='playlist-img' className='playlist-img'/>
         </PlaylistImgBox>
         <PlaylistInfo>
-          <Typography
-            noWrap
-            variant="h2"
-            fontWeight="300"
-            sx={{
-              width: "100%",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              transition: "color 0.3s",
-              "&:hover": {
-                color: "#1ed760",
-              },
-              "&.active": {
-                color: "#1ed760",
-              },
-            }}
-          >
-            {name}
-          </Typography>
+          <Typography color='inherit' noWrap variant='h2' fontWeight="300" sx={{width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{name}</Typography>
           <Typography noWrap color='#b3b3b3' sx={{width: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{`playlist · ${ownerName}`}</Typography>
         </PlaylistInfo>
     </PlaylistItemContainer>
