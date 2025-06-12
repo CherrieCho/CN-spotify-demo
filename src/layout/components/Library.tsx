@@ -8,6 +8,7 @@ import Loading from '../../common/components/Loading';
 import ErrorMessage from '../../common/components/ErrorMessage';
 import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
 import { useInView } from 'react-intersection-observer';
+import { PAGE_LIMIT } from '../../config/commonConfig';
 
 const LibraryContainer = styled("div")({
   display: "flex",
@@ -18,12 +19,20 @@ const LibraryContainer = styled("div")({
   padding: "1em",
 });
 
+export const ScrollBox = styled(Box)({
+  overflow: "auto",
+  overFlowX: "hidden",
+  '&::-webkit-scrollbar': {
+    display: "none"
+  },
+})
+
 const Library = () => {
   //무한스크롤 라이브러리
   const { ref, inView } = useInView();
   const {data: userProfileData} = useGetCurrentUserProfile();
   const {data, isLoading, error, hasNextPage, isFetchingNextPage, fetchNextPage} = useGetCurrentUserPlaylist({
-    limit: 10,
+    limit: PAGE_LIMIT,
     offset: 0,
   });
 
@@ -51,12 +60,12 @@ const Library = () => {
       {!data || data?.pages[0].total === 0 ? (
         <EmptyPlaylist />
       ):(
-      <Box sx={{overflow: "scroll", overflowX: "hidden"}}>
+      <ScrollBox>
         {data?.pages.map((page, index) => (
           <UserPlaylist playlists={page.items} key={index} />
         ))}
         <div ref={ref}>{isFetchingNextPage && <Loading />}</div>
-      </Box>
+      </ScrollBox>
       )}
     </LibraryContainer>
   )

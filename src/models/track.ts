@@ -1,10 +1,10 @@
 import { SimplifiedAlbum } from "./album";
 import { Artist } from "./artist";
-import { ExternalIds, ExternalUrls, Image, Restriction, Show } from "./commonType";
+import { ExternalIds, ExternalUrls, Image, Restriction } from "./commonType";
 
 export interface Track {
   album?: SimplifiedAlbum;
-  artists?: Artist;
+  artists?: Artist[];
   available_markets?: string[];
   disc_number?: number;
   duration_ms?: number;
@@ -14,13 +14,13 @@ export interface Track {
   href?: string;
   id?: string;
   is_playable?: boolean;
-  linked_from?: {};
+  linked_from?: Track;
   restrictions?: Restriction;
   name?: string;
   popularity?: number;
   preview_url?: string | null;
   track_number?: number;
-  type?: string;
+  type?: "track";
   uri?: string;
   is_local?: boolean;
 }
@@ -45,8 +45,31 @@ export interface Episode {
     fully_played?: boolean;
     resume_position_ms?: number;
   };
-  type: string;
+  type: "episode";
   uri: string;
   restrictions?: Restriction;
   show: Show;
+}
+
+export interface Show {
+  available_markets: string[];
+  copyrights: {
+    text?: string;
+    type?: string;
+  }[];
+  description: string;
+  html_description: string;
+  explicit: boolean;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images: Image;
+  is_externally_hosted: boolean;
+  languages: string[];
+  media_type: string;
+  name: string;
+  publisher: string;
+  type: "show";
+  uri: string;
+  total_episodes: number;
 }

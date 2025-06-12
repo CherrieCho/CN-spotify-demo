@@ -34,7 +34,7 @@ export interface Playlist extends BasePlaylist {
 
 }
 
-export interface PlaylistTrackObject {
+export interface PlaylistTrack {
   added_at?: string | null;
   added_by?: {
     external_urls?: ExternalUrls;
@@ -47,22 +47,26 @@ export interface PlaylistTrackObject {
   track: Track | Episode ;
 }
 
-export interface PlaylistTrack {
-  href: string;
-  limit: number;
-  next: string | null;
-  offset: number;
-  previous: string | null;
-  total: number;
-  items: PlaylistTrackObject[];
-}
+// export interface PlaylistTrack {
+//   href: string;
+//   limit: number;
+//   next: string | null;
+//   offset: number;
+//   previous: string | null;
+//   total: number;
+//   items: PlaylistTrackObject[];
+// }
 
 export interface GetPlaylistRequest {
   playlist_id: string;
   market?: string;
   fields?: string;
   additional_types?: string;
+}
 
+export interface GetPlaylistItemsRequest extends GetPlaylistRequest {
+  limit?: number;
+  offset?: number;
 }
 
 export type GetCurrentUserPlaylistResponse = ApiResponse<SimplifiedPlaylist>
