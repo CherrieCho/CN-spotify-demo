@@ -8,7 +8,8 @@ import PlaylistDetailTracks from './components/PlaylistDetailTracks';
 
 const PlaylistDetailContainer = styled(Box)({
   padding: "16px",
-  marginTop: "2em"
+  marginTop: "2em",
+  minWidth: 0,
 });
 
 const PlaylistDetailPage = () => {

@@ -81,7 +81,7 @@ const AppLayout = () => {
         </ContentBox>
       </Sidebar>
 
-      <ContentBox sx={{padding: "20px", margin: "0px 8px"}}>
+      <ContentBox sx={{padding: "20px", margin: "0px 8px", minWidth: 0,}}>
         <Navbar />
         <Outlet/>
       </ContentBox>
