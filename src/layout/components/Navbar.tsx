@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import React from 'react'
 import LoginButton from '../../common/components/LoginButton'
 import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile'
-import UserProfileImage from '../../common/components/UserProfileImage'
+import UserProfileImage from './UserProfileImage'
 import { styled } from '@mui/system'
 
 export const NavbarBox = styled(Box)({
