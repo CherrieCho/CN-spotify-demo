@@ -3,6 +3,8 @@ import { Box, Button, styled, Typography } from '@mui/material'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AddIcon from '@mui/icons-material/Add';
 import useCreatePlaylist from '../../hooks/useCreatePlaylist';
+import { getSpotifyAuthUrl } from '../../utils/auth';
+import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
 
 //styled component
 const PlaylistHeader = styled("div")(() => ({
@@ -13,10 +15,16 @@ const PlaylistHeader = styled("div")(() => ({
 }));
 
 const LibraryHead = () => {
+  const {data: userProfileData} = useGetCurrentUserProfile();
   const {mutate: createPlaylist} = useCreatePlaylist();
   const handleCreatePlaylist = () => {
+    if(!userProfileData){
+      alert("먼저 로그인 해주세요");
+      getSpotifyAuthUrl();
+    }else{
     //CreatePlaylistRequest 타입에 있는 파라미터를 보내줌
     createPlaylist({name: "케이팝 좋아"});
+    }
   }
 
   return (

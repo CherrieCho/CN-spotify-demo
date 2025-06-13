@@ -39,11 +39,11 @@ const UserProfileImage = ({userProfile}: Props) => {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("code_verifier");
-    if(location.pathname === '/'){
-      window.location.reload();
-    }else{
-      window.location.reload();
+    if (location.pathname === '/') {
+      window.location.reload(); 
+    } else {
       navigate('/');
+      window.location.reload(); 
     }
   }
 

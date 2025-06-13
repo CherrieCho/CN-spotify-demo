@@ -4,7 +4,7 @@ import { getSpotifyAuthUrl } from '../../utils/auth';
 
 const LoginButton = () => {
   const login = () => {
-    getSpotifyAuthUrl()
+    getSpotifyAuthUrl();
   }
 
   return (

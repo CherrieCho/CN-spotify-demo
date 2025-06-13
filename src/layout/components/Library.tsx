@@ -44,7 +44,12 @@ const Library = () => {
   }, [inView]);
 
   if(!userProfileData){
-    return <EmptyPlaylist />
+    return (
+    <LibraryContainer>
+      <LibraryHead />
+      <EmptyPlaylist />
+    </LibraryContainer>
+  )
   }
 
   if(isLoading){

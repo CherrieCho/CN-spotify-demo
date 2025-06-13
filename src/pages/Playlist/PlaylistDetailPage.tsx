@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import PlaylistDetailHeader from './components/PlaylistDetailHeader';
 import PlaylistDetailTracks from './components/PlaylistDetailTracks';
+import NoPlaylistData from '../../common/components/NoPlaylistData';
 
 const PlaylistDetailContainer = styled(Box)({
   padding: "16px",
@@ -20,7 +21,7 @@ const PlaylistDetailPage = () => {
   console.log("플레", playlistData);
 
   //playlist id가 undefined일 경우?
-  if(id === undefined || !playlistData) return <Navigate to='/' />;
+  if(id === undefined || !playlistData) return <NoPlaylistData />;
   return (
     <PlaylistDetailContainer>
       <PlaylistDetailHeader data={playlistData} />
