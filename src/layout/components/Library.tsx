@@ -20,8 +20,9 @@ const LibraryContainer = styled("div")({
 });
 
 export const ScrollBox = styled(Box)({
-  overflow: "auto",
-  overFlowX: "hidden",
+  overflowY: "auto",
+  overflowX: "hidden",
+  maxHeight: "100%",
   '&::-webkit-scrollbar': {
     display: "none"
   },

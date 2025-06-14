@@ -6,6 +6,7 @@ import { styled } from '@mui/system';
 import PlaylistDetailHeader from './components/PlaylistDetailHeader';
 import PlaylistDetailTracks from './components/PlaylistDetailTracks';
 import NoPlaylistData from '../../common/components/NoPlaylistData';
+import SearchMusic from './components/SearchMusic';
 
 const PlaylistDetailContainer = styled(Box)({
   padding: "16px",
@@ -26,7 +27,7 @@ const PlaylistDetailPage = () => {
     <PlaylistDetailContainer>
       <PlaylistDetailHeader data={playlistData} />
       {playlistData?.tracks?.total === 0 ?
-      <Typography>Let's find something for your playlist</Typography>
+      <SearchMusic />
     : <PlaylistDetailTracks />
     }
     </PlaylistDetailContainer >

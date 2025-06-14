@@ -30,7 +30,7 @@ const PlaylistItemContainer = styled("div")<StyledProps>(({theme, isActive}) => 
   },
 }));
 
-const PlaylistImgBox = styled("div")({
+export const PlaylistImgBox = styled("div")({
   width: "48px",
   height: "48px",
   borderRadius: "8px",
