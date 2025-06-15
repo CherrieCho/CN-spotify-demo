@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { AddToPlaylistRequest } from "../models/playlist";
 import { addTrackToPlaylist } from "../apis/playlistApi";
 
-const useAddTrackToPlaylist = () => {
+const useAddTrack = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -18,4 +18,4 @@ const useAddTrackToPlaylist = () => {
   });
 }
 
-export default useAddTrackToPlaylist;
+export default useAddTrack;

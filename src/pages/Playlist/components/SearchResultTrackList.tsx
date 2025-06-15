@@ -14,8 +14,9 @@ import { Track } from '../../../models/track';
 import { useInView } from 'react-intersection-observer';
 import Loading from '../../../common/components/Loading';
 import { PlaylistImgBox } from '../../../common/components/PlaylistItem';
-import useAddTrackToPlaylist from '../../../hooks/useAddTracktoPlaylist';
+
 import { useParams } from 'react-router';
+import useAddTrack from '../../../hooks/useAddTrack';
 
 interface SearchResultTrackListProps {
   list: Track[];
@@ -60,7 +61,7 @@ const SearchResultTrackList = ({
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const {mutate: addTrack} = useAddTrackToPlaylist();
+  const {mutate: addTrack} = useAddTrack();
   const {id} = useParams<{id: string}>();
 
   //노래 플리에 추가하는 함수
