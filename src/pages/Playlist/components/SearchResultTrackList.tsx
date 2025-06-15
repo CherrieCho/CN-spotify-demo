@@ -14,6 +14,8 @@ import { Track } from '../../../models/track';
 import { useInView } from 'react-intersection-observer';
 import Loading from '../../../common/components/Loading';
 import { PlaylistImgBox } from '../../../common/components/PlaylistItem';
+import useAddTrackToPlaylist from '../../../hooks/useAddTracktoPlaylist';
+import { useParams } from 'react-router';
 
 interface SearchResultTrackListProps {
   list: Track[];
@@ -43,6 +45,7 @@ const SearchResultTrackList = ({
   hasNextPage,
   fetchNextPage,
 }: SearchResultTrackListProps) => {
+  //무한스크롤
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const { ref: endRef, inView } = useInView({
@@ -56,6 +59,20 @@ const SearchResultTrackList = ({
       fetchNextPage();
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const {mutate: addTrack} = useAddTrackToPlaylist();
+  const {id} = useParams<{id: string}>();
+
+  //노래 플리에 추가하는 함수
+  const addMusicToPlaylist = (uri: string | undefined) =>{
+    //리퀘스트 타입에 있는 파라미터를 보내줌(uri는 track || episode uri)
+    if(!uri || !id) return;
+    addTrack({
+      playlist_id: id || "",
+      uris: [uri],
+      position: 0,
+    });
+  }
 
   return (
     <StyledTableContainer ref={containerRef} sx={{ maxHeight: "100%", overflow: 'auto' }}>
@@ -88,7 +105,7 @@ const SearchResultTrackList = ({
                 <Typography variant="body2">{track.album?.name || 'Unknown Album'}</Typography>
               </TableCell>
               <TableCell>
-                <Button variant="outlined">Add</Button>
+                <Button variant="outlined" onClick={() => addMusicToPlaylist(track.uri)}>Add</Button>
               </TableCell>
             </TableRow>
           ))}

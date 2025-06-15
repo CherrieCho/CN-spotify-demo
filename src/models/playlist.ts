@@ -78,3 +78,11 @@ export interface CreatePlaylistRequest {
   collaborative?: boolean;
   description?: string;
 }
+
+export interface AddToPlaylistRequest {
+  uris?: string[];
+  position?: number;
+}
+
+export type Snapshot = Pick<BasePlaylist, "snapshot_id">;
+export type GetAddToPlaylistResponse = ApiResponse<Snapshot>
