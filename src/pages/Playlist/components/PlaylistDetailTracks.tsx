@@ -24,7 +24,7 @@ const PlaylistDetailTracks = () => {
   }, [inView]);
 
   return (
-    <ScrollBox sx={{maxHeight: 500}}>
+    <ScrollBox sx={{maxHeight: 550}}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>

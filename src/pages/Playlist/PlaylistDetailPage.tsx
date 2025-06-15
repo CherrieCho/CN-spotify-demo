@@ -9,9 +9,13 @@ import NoPlaylistData from '../../common/components/NoPlaylistData';
 import SearchMusic from './components/SearchMusic';
 
 const PlaylistDetailContainer = styled(Box)({
+  height: "calc(100% - 64px)",
   padding: "16px",
-  marginTop: "2em",
+  paddingTop: "2em",
   minWidth: 0,
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column"
 });
 
 const PlaylistDetailPage = () => {
@@ -27,8 +31,16 @@ const PlaylistDetailPage = () => {
     <PlaylistDetailContainer>
       <PlaylistDetailHeader data={playlistData} />
       {playlistData?.tracks?.total === 0 ?
-      <SearchMusic />
-    : <PlaylistDetailTracks />
+      (
+      <Box sx={{ flex: 1, minHeight: 0, }}>
+        <SearchMusic />
+      </Box>
+      )
+    : (
+      <Box sx={{ flex: 1, minHeight: 0, }}>
+        <PlaylistDetailTracks />
+      </Box>
+    )
     }
     </PlaylistDetailContainer >
   )

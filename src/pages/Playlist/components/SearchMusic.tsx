@@ -1,5 +1,5 @@
 import { Box, InputAdornment, styled, TextField, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import useSearchItemsByKeyword from '../../../hooks/useSearchItemsByKeyword';
 import { SEARCH_TYPE } from '../../../models/search';
 import SearchResultTrackList from './SearchResultTrackList';
@@ -11,9 +11,9 @@ import { ScrollBox } from '../../../layout/components/Library';
 
 export const ScrollContainer = styled(Box)({
   marginTop: "20px",
-  overflowY: "auto",
-  overflowX: "hidden",
-  height: "600px",
+  overflow: "hidden",
+  flex: 1,
+  minHeight: 0,
   '&::-webkit-scrollbar': {
     display: "none"
   },
@@ -38,19 +38,13 @@ const SearchMusic = () => {
 
   const handleSearchKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
-  }
+  } 
 
-  //무한스크롤
-  const { ref, inView } = useInView();
-
-  useEffect(() => {
-    if(inView && hasNextPage && !isFetchingNextPage){
-      fetchNextPage();  //offset을 다음페이지 분량에 맞춰서 호출하는 함수
-    }
-  }, [inView]);
+  // 모든 페이지를 가져오기
+  const allTracks = data?.pages.flatMap((page) => page.tracks?.items || []) || [];
 
   return (
-    <Box sx={{height: "100%"}}>
+    <Box sx={{ height: "100%", width: "100%", display: "flex", flexDirection: "column" }}>
       <SearchbarContainer>
         <Typography variant='h1' sx={{marginBottom: "0.8em"}}>Let's find something for your playlist</Typography>
         <TextField 
@@ -70,27 +64,17 @@ const SearchMusic = () => {
         }}
         />
       </SearchbarContainer>
-      <ScrollContainer sx={{maxHeight: "800px"}}>
-      {data && data.pages.some((page) => page.tracks) ?
-        data.pages.map((item, index) => {
-          if(!item.tracks){
-            return null
-          }else{
-            return (
-              <SearchResultTrackList list={item.tracks.items} key={index}/>
-          )
-          }
-        })
-        // 데이터는 없고 키워드는 있는 상태. 이때 로딩이냐 아니냐
-        : keyword ? isLoading ?
-          <Loading /> :
-          <Typography variant='h2'>
-            {`No Results Found for "${keyword}"`}
-          </Typography>
-          //데이터도 없고 키워드도 없음(아직 검색안함 상태)
-          : ""
-      }
-      <div ref={ref}>{isFetchingNextPage && <Loading />}</div>
+      <ScrollContainer>
+        {data && data.pages.some((page) => page.tracks) ? (
+        <SearchResultTrackList
+          list={allTracks}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+        />
+          ) : keyword ? (
+            isLoading ? <Loading /> : <Typography variant='h2'>{`No Results Found for "${keyword}"`}</Typography>
+          ) : null}
       </ScrollContainer>
     </Box>
   )
