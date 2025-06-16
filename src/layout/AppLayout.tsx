@@ -66,7 +66,7 @@ const AppLayout = () => {
   return (
     <Layout>
       <Sidebar>
-        <ContentBox sx={{flex: 0, display: "flex", alignItems: "center"}}>
+        <ContentBox sx={{height: "6.5rem", display: "flex", alignItems: "center"}}>
           <NavList>
             <StyledNavLink to="/" end>
               <HomeIcon />
@@ -79,7 +79,7 @@ const AppLayout = () => {
           </NavList>
         </ContentBox>
 
-        <ContentBox sx={{flex: 8, overflow: "hidden"}}>
+        <ContentBox sx={{flex: 1, marginBottom: 0, overflow: "hidden"}}>
           <Library />
         </ContentBox>
       </Sidebar>

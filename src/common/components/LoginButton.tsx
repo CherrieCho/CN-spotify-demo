@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { getSpotifyAuthUrl } from '../../utils/auth';
 
 const LoginButton = () => {
@@ -8,7 +8,7 @@ const LoginButton = () => {
   }
 
   return (
-    <Button variant='contained' color='secondary' size='large' onClick={login}>Login</Button>
+      <Button variant='contained' color='secondary' size='large' onClick={login} sx={{whiteSpace: "nowrap"}}>Login</Button>
   )
 }
 

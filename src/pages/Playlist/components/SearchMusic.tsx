@@ -52,7 +52,7 @@ const SearchMusic = () => {
         size='small'
         value={keyword}
         onChange={handleSearchKeyword}
-        sx={{border: "0", backgroundColor: "#282828"}}
+        sx={{"& fieldset": {border: "none"}, backgroundColor: "#282828"}}
         slotProps={{
           input: {
             startAdornment: (
