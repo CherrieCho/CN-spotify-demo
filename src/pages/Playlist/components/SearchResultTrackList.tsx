@@ -87,7 +87,7 @@ const SearchResultTrackList = ({
       >
         <TableBody>
           {list.map((track, index) => (
-            <TableRow key={index} hover>
+            <TableRow key={index} hover sx={{cursor: "pointer"}}>
               <TableCell>
                 <PlaylistImgBox>
                   <StyledImg

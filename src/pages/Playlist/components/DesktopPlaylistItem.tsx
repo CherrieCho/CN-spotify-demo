@@ -23,15 +23,9 @@ const DesktopPlaylistItem = ({item, index}: DesktopPlaylistItemProps) => {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
   return (
-    <TableRow sx={{
-      '&:hover': {
-        backgroundColor: '#282828'
-      },
+    <TableRow hover sx={{
       cursor: "pointer",
       border: "none",
-      [`& .${tableCellClasses.root}`]: {
-        borderBottom: "none"
-      }
       }}>
       <TableCell>{index}</TableCell>
       <TableCell>{item.track.name || "No Name"}</TableCell>

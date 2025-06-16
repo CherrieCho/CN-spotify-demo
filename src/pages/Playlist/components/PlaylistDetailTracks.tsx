@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import useGetPlaylistItems from '../../../hooks/useGetPlaylistItems'
 import { useParams } from 'react-router';
-import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Box, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from '@mui/material';
 import DesktopPlaylistItem from './DesktopPlaylistItem';
 import { PAGE_LIMIT } from '../../../config/commonConfig';
 import { useInView } from 'react-intersection-observer';
 import Loading from '../../../common/components/Loading';
-import { ScrollBox } from '../../../layout/components/Library';
+import { styled } from '@mui/system';
+
+export const TableBox = styled(Box)({
+  overflow: "auto",
+  maxHeight: "100%",
+  '&::-webkit-scrollbar': {
+    display: "none"
+  },
+})
+
 
 const PlaylistDetailTracks = () => {
   const {id} = useParams<{id: string}>();
@@ -15,17 +24,26 @@ const PlaylistDetailTracks = () => {
   console.log("트랙정보", playlistItems);
 
   //무한스크롤
-  const { ref, inView } = useInView();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const { ref, inView } = useInView({
+    root: containerRef.current,
+    rootMargin: '200px 0px',
+  });
 
   useEffect(() => {
     if(inView && hasNextPage && !isFetchingNextPage){
       fetchNextPage();  //offset을 다음페이지 분량에 맞춰서 호출하는 함수
     }
-  }, [inView]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <ScrollBox sx={{maxHeight: 550}}>
-      <Table stickyHeader>
+    <TableBox ref={containerRef} sx={{maxHeight: "100%"}}>
+      <Table stickyHeader sx={{
+        [`& .${tableCellClasses.root}`]: {
+          borderBottom: "none"
+        }
+      }}>
         <TableHead>
           <TableRow>
             <TableCell>#</TableCell>
@@ -45,11 +63,13 @@ const PlaylistDetailTracks = () => {
             index={pageIndex * PAGE_LIMIT + itemIndex + 1}/>
           }))}
           <TableRow ref={ref} sx={{ height: '20px', border: "none" }}>
-            {isFetchingNextPage && <Loading />}
+            <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
+              {isFetchingNextPage && <Loading />}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-    </ScrollBox>
+    </TableBox>
   )
 }
 

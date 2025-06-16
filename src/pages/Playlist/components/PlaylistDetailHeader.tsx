@@ -2,6 +2,7 @@ import React from 'react'
 import { Playlist } from '../../../models/playlist'
 import { Grid, styled } from '@mui/system';
 import { Typography } from '@mui/material';
+import theme from '../../../theme';
 
 interface PlaylistDataProps {
   data: Playlist;
@@ -12,9 +13,10 @@ const PlaylistHeaderBox = styled(Grid)({
   backgroundColor: "black",
   borderRadius: "8px 8px 0 0",
   minWidth: 0,
+  flexWrap: "nowrap",
 });
 
-const PlaylistImageBox = styled(Grid)({
+const PlaylistImageBox = styled(Grid)(({theme}) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -22,7 +24,10 @@ const PlaylistImageBox = styled(Grid)({
   aspectRatio: "1 / 1",
   borderRadius: "8px",
   overflow: "hidden",
-});
+  [theme.breakpoints.down("lg")]: {
+    width: "150px",
+  },
+}));
 
 const PlaylistDescriptionBox = styled(Grid)({
   display: "flex",
@@ -42,7 +47,21 @@ const PlaylistDetailHeader = ({data}: PlaylistDataProps) => {
         <img src={data.images && data.images.length > 0 ? data.images[0].url : defaultImg} className='playlist-img'/>
       </PlaylistImageBox>
       <PlaylistDescriptionBox size={9}>
-        <Typography noWrap  variant='h1' sx={{fontSize: "4rem", maxWidth: "100%", minWidth: 0, overflow: "hidden"}}>{data.name || ""}</Typography>
+        <Typography
+        noWrap
+        variant='h1'
+        sx={{
+          fontSize: "4rem",
+          maxWidth: "100%",
+          minWidth: 0,
+          overflow:
+          "hidden",
+          [theme.breakpoints.down("lg")]: {
+            fontSize: "2rem",
+          },
+          }}>
+            {data.name || ""}
+        </Typography>
         <Typography variant='body1' sx={{fontWeight: "700"}}>
           {`${data.owner?.display_name} · ${data.tracks?.items.length} songs`}
         </Typography>
