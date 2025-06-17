@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 import React from "react";
-import "../../styles/Card.style.css"
+import "../../styles/PlayButton.style.css"
 
 const PlayButtonContainer = styled("button")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -11,6 +11,7 @@ const PlayButtonContainer = styled("button")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  position: "absolute",
   cursor: "pointer",
   boxShadow: "rgba(0, 0, 0, 0.3) 0px 8px 8px 0px",
   "&:focus": {
@@ -18,9 +19,13 @@ const PlayButtonContainer = styled("button")(({ theme }) => ({
   },
 }));
 
-const PlayButton: React.FC = () => {
+interface PlayButtonProps {
+  className?: string;
+}
+
+const PlayButton = ({ className }: PlayButtonProps) => {
   return (
-    <PlayButtonContainer className="play-button">
+    <PlayButtonContainer className={`play-button ${className ?? ""}`}>
       <svg
         width="24"
         height="24"

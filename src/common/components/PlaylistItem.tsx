@@ -22,10 +22,10 @@ const PlaylistItemContainer = styled("div")<StyledProps>(({theme, isActive}) => 
   display: "flex",
   gap: "12px",
   cursor: "pointer",
-  backgroundColor: isActive ? "#1E1E1E" : "transparent",
+  backgroundColor: isActive ? "#282828" : "transparent",
   color: isActive ? theme.palette.primary.main : "inherit",
   "&:hover": {
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "#282828",
     color: theme.palette.primary.main,
   },
 }));

@@ -28,7 +28,7 @@ const colourPalette = [
   "#1D8954", // 초록
 ];
 
-const SearchPageContainer = styled(Box)({
+export const SearchPageContainer = styled(Box)({
   overflowY: "auto",
   height: "calc(100% - 70px)",
     '&::-webkit-scrollbar': {

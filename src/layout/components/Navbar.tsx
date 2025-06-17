@@ -23,7 +23,7 @@ const Navbar = () => {
   const location = useLocation();
   return (
     <NavbarBox>
-      {location.pathname === '/search' && <SearchBox />}
+      {(location.pathname === '/search' || location.pathname.startsWith('/search/')) && <SearchBox />}
       {userProfile && userProfile?.images ? <UserProfileImage userProfile={userProfile} /> : <LoginButton />}
     </NavbarBox>
   )

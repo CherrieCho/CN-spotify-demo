@@ -18,7 +18,7 @@ const AlbumBox = styled(Box)({
   flexDirection: "column",
   alignItems: "center",
   "&:hover": {
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "#282828",
   },
   padding: "12px"
 });

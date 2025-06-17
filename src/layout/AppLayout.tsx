@@ -20,7 +20,7 @@ const Sidebar = styled("div")(({theme}) => ({
   display: "flex",
   flexDirection: "column",
     [theme.breakpoints.down("md")]: { 
-    width: "250px"
+    width: "220px"
   },
   [theme.breakpoints.down("sm")]: {   //화면이 sm사이즈 이하일 시 적용(미디어쿼리)
     display: "none"

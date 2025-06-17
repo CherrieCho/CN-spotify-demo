@@ -1,0 +1,29 @@
+.play-button {
+  right: 10px;
+  bottom: 10px;
+  transform: translate(0%, 0%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.override {
+  right: 6px !important;
+  bottom: -47px !important;
+}
+
+.top-result-override {
+  right: 16px !important;
+  bottom: 16px !important;
+}
+
+.album-box:hover .play-button {
+  opacity: 1;
+}
+
+.artist-card:hover .play-button {
+  opacity: 1;
+}
+
+.top-result-box:hover .play-button {
+  opacity: 1;
+}
