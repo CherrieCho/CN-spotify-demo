@@ -8,6 +8,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Avatar, Box, Grid, IconButton, List, ListItem, styled, Typography } from '@mui/material';
 import Card from '../../common/components/Card';
 import PlayButton from '../../common/components/PlayButton';
+import ErrorMessage from '../../common/components/ErrorMessage';
 
 const SearchResultTop = styled(Grid)({
   paddingLeft: "16px",
@@ -89,16 +90,23 @@ const SearchKeywordPage = () => {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
 
+  //image가 없는경우 디폴트이미지
+  const defaultImg = "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999";
+
   if(isLoading){
     return <Loading />
   }
 
   if(error){
-    return 
+    return <ErrorMessage errorMessage = {error.message} />
   }
 
-  if(trackData?.length === 0 && albumData?.length === 0 && artistData?.length === 0){
-    return <Box>no results found</Box>
+  if(trackData?.length === 0 || albumData?.length === 0 || artistData?.length === 0){
+    return (
+      <Box sx={{width: "100%", height: "80%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <Typography variant='h1'>{`No results found for "${keyword}"`}</Typography>
+      </Box>
+    )
   }
 
   return (
@@ -157,7 +165,7 @@ const SearchKeywordPage = () => {
             <ArtistCard size={{xs: 6, sm: 4, md: 2}} className='artist-card'>
               <Box sx={{width: "100%"}}>
                 <Box sx={{width: "100%", position: "relative"}}>
-                  <ArtistImage src={item.images?.[0]?.url} />
+                  <ArtistImage src={item.images?.[0]?.url ?? defaultImg} />
                   <PlayButton className='override' />
                 </Box>
                 <Typography variant='h2' sx={{margin: "16px 0px 0px"}}>{item.name}</Typography>
