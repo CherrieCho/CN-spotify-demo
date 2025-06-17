@@ -61,7 +61,9 @@ const ArtistCard = styled(Grid)({
 
 const ArtistImage  = styled("img")({
   width: "100%",
-  height: "100%",
+  aspectRatio: "1 / 1",
+  objectFit: "cover",
+  objectPosition: "center",
   borderRadius: "100%"
 });
 
