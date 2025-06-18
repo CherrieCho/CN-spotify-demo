@@ -21,6 +21,8 @@ const ProfilePic = styled("img")({
 });
 
 const UserProfileImage = ({userProfile}: Props) => {
+  //사용자 이름
+  const userName = userProfile.display_name ?? "user";
   //드롭다운 메뉴
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -68,7 +70,7 @@ const UserProfileImage = ({userProfile}: Props) => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Tooltip title="settings">
+        <Tooltip title={userName}>
           <ProfilePic
             src={profileImageUrl}
             alt='user-img'

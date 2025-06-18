@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import useSingleSearch from '../../hooks/useSingleSearch';
 import { useParams } from 'react-router';
 import { SEARCH_TYPE } from '../../models/search';
 import Loading from '../../common/components/Loading';
 import { SearchPageContainer } from './SearchPage';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Avatar, Box, Grid, IconButton, List, ListItem, styled, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Avatar, Box, Grid, IconButton, List, ListItem, Menu, MenuItem, Snackbar, SnackbarCloseReason, styled, Typography } from '@mui/material';
 import Card from '../../common/components/Card';
 import PlayButton from '../../common/components/PlayButton';
 import ErrorMessage from '../../common/components/ErrorMessage';
+import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
+import useGetCurrentUserPlaylist from '../../hooks/useGetCurrentUserPlaylist';
+import { PAGE_LIMIT } from '../../config/commonConfig';
+import useAddTrack from '../../hooks/useAddTrack';
+import { useInView } from 'react-intersection-observer';
 
 const SearchResultTop = styled(Grid)({
   paddingLeft: "16px",
@@ -68,6 +74,92 @@ const ArtistImage  = styled("img")({
 });
 
 const SearchKeywordPage = () => {
+  const [selectedTrackUri, setSelectedTrackUri] = useState<string | undefined>(undefined);
+  const {mutate: addTrack} = useAddTrack();
+  const {data: userProfile} = useGetCurrentUserProfile();
+  const {data: userPlaylistData, hasNextPage, isFetchingNextPage, fetchNextPage} = useGetCurrentUserPlaylist({
+    limit: PAGE_LIMIT,
+    offset: 0,
+  });
+  // 모든 페이지의 플리를 가져오기
+  const allPlaylists = userPlaylistData?.pages.flatMap((page) => page?.items || []) || [];
+  console.log("내 플리", allPlaylists)
+  
+  //플레이리스트 무한스크롤
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const { ref, inView } = useInView({
+  root: containerRef.current,
+});
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  //플레이리스트 목록메뉴
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const openMenu = Boolean(anchorEl);
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  //스낵바 팝업관련
+  const [open, setOpen] = useState<boolean>(false);
+  const handleClickAddIcon = (event: React.MouseEvent<HTMLElement>, trackUri: string | undefined) => {
+    if(!userProfile){
+      setOpen(true);  //로그인 안했으면 로그인해주세요 스낵바 열기
+    }else{
+      setSelectedTrackUri(trackUri); // 선택된 트랙 저장
+      handleOpenMenu(event);  //로그인 했으면 내 플리 목록 메뉴 팝업 오픈하기
+    }
+  }
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+  const isLoggedIn = () => {
+    if(!userProfile){
+      return "로그인을 해주세요";
+    }else{
+      return "플레이리스트에 추가되었습니다";
+    }
+  }
+
+  //노래 플리에 추가
+  const addMusicToPlaylist = (playlistId: string | undefined, trackUri: string |undefined) => {
+    if(!playlistId || !trackUri) return;
+    addTrack({
+      playlist_id: playlistId,
+      uris: [trackUri],
+      position: 0,
+    });
+    setOpen(true); //플리에 추가되었습니다 스낵바 열기
+    setAnchorEl(null); //메뉴 닫기
+  }
+
   //검색데이터
   const { keyword } = useParams<{ keyword: string }>();
   const {data, error, isLoading } = useSingleSearch({
@@ -129,16 +221,23 @@ const SearchKeywordPage = () => {
         <SearchResultTop size={{xs: 12, md: 6}}>
           <Typography variant='h1' sx={{paddingBottom: "8px"}}>Songs</Typography>
           <List>
-            {slicedTrackData && slicedTrackData?.map((item) => (
-              <SongListItem>
+            {slicedTrackData && slicedTrackData?.map((item, index) => (
+              <SongListItem key={index}>
                 <Box sx={{display: "flex", width: "60%"}}>
                   <Avatar variant="circular" sx={{borderRadius: "8px", marginRight: "12px"}} src={item.album?.images?.[0]?.url}/>
                   <Box sx={{display: "flex", flexDirection: "column", minWidth: 0}}>
-                    <Typography variant='body1' sx={{fontSize: '1rem', fontWeight: "700"}}>{item.name}</Typography>
-                    <Typography variant='body1' sx={{fontSize: '0.875rem', color: "gray"}}>{item.artists?.[0].name}</Typography>
+                    <Typography noWrap variant='body1' sx={{fontSize: '1rem', fontWeight: "700"}}>{item.name}</Typography>
+                    <Typography noWrap variant='body1' sx={{fontSize: '0.875rem', color: "gray"}}>{item.artists?.[0].name}</Typography>
                   </Box>
                 </Box>
-                <IconButton className="icon-button" sx={{
+                <IconButton
+                id="add-button"
+                className="icon-button"
+                aria-controls={openMenu ? 'long-menu' : undefined}
+                aria-expanded={openMenu ? 'true' : undefined}
+                aria-haspopup="true"
+                onClick={(event) => handleClickAddIcon(event, item.uri)}
+                sx={{
                   color: "rgb(179, 179, 179)",
                   opacity: 0,
                   transform: "translate(0%, 0%)",
@@ -146,6 +245,40 @@ const SearchKeywordPage = () => {
                   }}>
                   <AddCircleOutlineIcon />
                 </IconButton>
+                <Menu
+                ref={containerRef}
+                id="long-menu"
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleCloseMenu}
+                slotProps={{
+                  paper: {
+                    style: {
+                      maxHeight: 48 * 4.5,
+                      width: '20ch',
+                    },
+                  },
+                  list: {
+                    'aria-labelledby': 'add-button',
+                  },
+                }}
+                >
+                  {allPlaylists.map((playlist, index) => (
+                      <MenuItem key={index} onClick={() => addMusicToPlaylist(playlist.id, selectedTrackUri)}>
+                        <Typography noWrap>{playlist.name}</Typography>
+                      </MenuItem>
+                    ))}
+                    <MenuItem sx={{height: 0, minHeight: 0, overflow: "hidden", padding: 0}}>
+                      <div ref={ref}>{isFetchingNextPage && <Loading />}</div>
+                    </MenuItem>
+                </Menu>
+                <Snackbar
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleClose}
+                message={isLoggedIn()}
+                action={action}
+                />
                 <Box>
                   <Box>
                     {item.duration_ms !== undefined
@@ -163,8 +296,8 @@ const SearchKeywordPage = () => {
       <Box>
         <Typography variant='h1' sx={{margin: "24px 0"}}>Artists</Typography>
         <Grid container sx={{width: "100%"}}>
-          {slicedArtistData && slicedArtistData?.map((item) => (
-            <ArtistCard size={{xs: 6, sm: 4, md: 2}} className='artist-card'>
+          {slicedArtistData && slicedArtistData?.map((item, index) => (
+            <ArtistCard size={{xs: 6, sm: 4, md: 2}} className='artist-card' key={index}>
               <Box sx={{width: "100%"}}>
                 <Box sx={{width: "100%", position: "relative"}}>
                   <ArtistImage src={item.images?.[0]?.url ?? defaultImg} />
@@ -182,8 +315,8 @@ const SearchKeywordPage = () => {
       <Box>
         <Typography variant='h1' sx={{margin: "24px 0"}}>Albums</Typography>
         <Grid container sx={{width: "100%"}}>
-          {slicedAlbumData?.map((item) => (
-            <Grid size={{xs: 6, sm: 4, md: 2}} >
+          {slicedAlbumData?.map((item, index) => (
+            <Grid size={{xs: 6, sm: 4, md: 2}} key={index}>
               <Card image={item.images?.[0]?.url} name={item.name} artistName={item.artists[0].name} />
             </Grid>
           ))
