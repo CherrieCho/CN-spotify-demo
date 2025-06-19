@@ -84,9 +84,19 @@ const AppLayout = () => {
         </ContentBox>
       </Sidebar>
 
-      <ContentBox sx={{padding: "20px", margin: "0px 8px", minWidth: 0,}}>
+      <ContentBox sx={{padding: "20px", margin: "0px 8px", minWidth: 0, height: "100%", display: 'flex', flexDirection: 'column'}}>
         <Navbar />
-        <Outlet/>
+        <Box sx={{
+          flex: 1,
+          overflowY: 'auto',
+          overflowX: "hidden",
+          minHeight: 0,
+          '&::-webkit-scrollbar': {
+            scrollbarWidth: "none"
+            },
+          }}>
+          <Outlet />
+        </Box>
       </ContentBox>
     </Layout>
   )

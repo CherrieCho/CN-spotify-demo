@@ -29,8 +29,8 @@ const colourPalette = [
 ];
 
 export const SearchPageContainer = styled(Box)({
-  overflowY: "auto",
-  height: "calc(100% - 70px)",
+  // overflowY: "auto",
+  // height: "calc(100% - 70px)",
     '&::-webkit-scrollbar': {
     scrollbarWidth: "none"
   },
