@@ -9,7 +9,7 @@ import NoPlaylistData from '../../common/components/NoPlaylistData';
 import SearchMusic from './components/SearchMusic';
 
 const PlaylistDetailContainer = styled(Box)({
-  height: "calc(100% - 64px)",
+  height: "100%",
   padding: "16px",
   paddingTop: "2em",
   minWidth: 0,

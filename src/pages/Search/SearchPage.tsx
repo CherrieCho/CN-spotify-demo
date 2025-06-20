@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import React from 'react'
 import useGetBrowseCategories from '../../hooks/useGetBrowseCategories';
 import Loading from '../../common/components/Loading';
+import theme from '../../theme';
 
 //색상 배열
 const colourPalette = [
@@ -29,8 +30,6 @@ const colourPalette = [
 ];
 
 export const SearchPageContainer = styled(Box)({
-  // overflowY: "auto",
-  // height: "calc(100% - 70px)",
     '&::-webkit-scrollbar': {
     scrollbarWidth: "none"
   },
@@ -71,7 +70,18 @@ const SearchPage = () => {
 
   return (
     <SearchPageContainer>
-      <Typography variant='h1' margin="16px 0">Browse all</Typography>
+      <Typography
+      variant='h1'
+      margin="16px 0"
+      sx={{
+        paddingLeft: "16px",
+        [theme.breakpoints.down("md")]: { 
+          padding: 0
+        }
+      }}
+      >
+        Browse all
+      </Typography>
 
       <Grid container spacing={2} sx={{overflow: "hidden"}}>
         {categoryData?.categories.items.map((item) => {
@@ -79,7 +89,16 @@ const SearchPage = () => {
           const randomColour = colourPalette[Math.floor(Math.random() * colourPalette.length)];
 
           return (
-          <Grid size={{xs: 12, sm: 6, md: 4}} key={item.id} sx={{paddingLeft: "16px", paddingTop: "16px"}}>
+          <Grid
+          size={{xs: 12, sm: 6, md: 4}}
+          key={item.id}
+          sx={{
+            paddingLeft: "16px",
+            paddingTop: "16px",
+            [theme.breakpoints.down("md")]: { 
+              padding: 0
+            }
+            }}>
             <CardItem sx={{backgroundColor: randomColour}}>
               <Typography variant='h1' sx={{fontSize: "1rem", padding: "16px", position: "absolute"}}>{item.name}</Typography>
               <MusicCardImage src={item.icons[0].url}/>

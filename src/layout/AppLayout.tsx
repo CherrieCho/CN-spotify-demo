@@ -5,6 +5,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import Library from './components/Library';
 import Navbar from './components/Navbar';
+import theme from '../theme';
+import MobileMenu from './components/MobileMenu';
 
 
 //styled components
@@ -24,6 +26,15 @@ const Sidebar = styled("div")(({theme}) => ({
   },
   [theme.breakpoints.down("sm")]: {   //화면이 sm사이즈 이하일 시 적용(미디어쿼리)
     display: "none"
+  }
+}));
+
+const BottomBar = styled("div")(({theme}) => ({
+  [theme.breakpoints.up("sm")]: { 
+    display: "none"
+  },
+  [theme.breakpoints.down("sm")]: { 
+    display: "block"
   }
 }));
 
@@ -84,7 +95,19 @@ const AppLayout = () => {
         </ContentBox>
       </Sidebar>
 
-      <ContentBox sx={{padding: "20px", margin: "0px 8px", minWidth: 0, height: "100%", display: 'flex', flexDirection: 'column'}}>
+      <ContentBox
+      sx={{
+        padding: "20px",
+        margin: "0px 8px",
+        minWidth: 0,
+        height: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        [theme.breakpoints.down("sm")]: { 
+          padding: "8px",
+          margin: 0
+        }
+        }}>
         <Navbar />
         <Box sx={{
           flex: 1,
@@ -97,6 +120,9 @@ const AppLayout = () => {
           }}>
           <Outlet />
         </Box>
+        <BottomBar>
+          <MobileMenu />
+        </BottomBar>
       </ContentBox>
     </Layout>
   )

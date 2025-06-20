@@ -10,7 +10,7 @@ interface CardProps{
 }
 
 //styled components
-const AlbumBox = styled(Box)({
+const AlbumBox = styled(Box)(({theme}) => ({
   width: "100%",
   minWidth: "160px",
   borderRadius: "8px",
@@ -20,8 +20,12 @@ const AlbumBox = styled(Box)({
   "&:hover": {
     backgroundColor: "#282828",
   },
-  padding: "12px"
-});
+  padding: "12px",
+  [theme.breakpoints.down("sm")]: { 
+    padding: "12px 6px",
+    minWidth: "130px"
+  }
+}));
 
 //artistName undefined인 경우 처리해주기
 

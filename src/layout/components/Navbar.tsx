@@ -14,13 +14,19 @@ interface NavbarBoxProps {
 //서치박스 유무에 따른 조건부 스타일링
 export const NavbarBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "hasSearchBox",
-})<NavbarBoxProps>(({ hasSearchBox }) => ({
+})<NavbarBoxProps>(({ hasSearchBox, theme }) => ({
   display: "flex",
   justifyContent: hasSearchBox ? "space-between" : "flex-end",
   alignItems: "center",
   width: "100%",
   height: "64px",
   padding: "0 16px",
+  [theme.breakpoints.down("md")]: { 
+  padding: 0
+  },
+  [theme.breakpoints.down("sm")]: { 
+  gap: "1.5em"
+  },
 }));
 
 const Navbar = () => {

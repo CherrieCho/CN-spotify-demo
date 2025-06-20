@@ -16,10 +16,13 @@ import { PAGE_LIMIT } from '../../config/commonConfig';
 import useAddTrack from '../../hooks/useAddTrack';
 import { useInView } from 'react-intersection-observer';
 
-const SearchResultTop = styled(Grid)({
+const SearchResultTop = styled(Grid)(({theme}) => ({
   paddingLeft: "16px",
-  paddingTop: "16px"
-});
+  paddingTop: "16px",
+  [theme.breakpoints.down("md")]: { 
+    paddingLeft: 0,
+  }
+}));
 
 const SongListItem = styled(ListItem)({
   width: "100%",
@@ -54,7 +57,7 @@ const TopResultImage = styled("img")({
 
 const ArtistCard = styled(Grid)({
   width: "100%",
-  minWidth: "160px",
+  minWidth: "130px",
   borderRadius: "8px",
   display: "flex",
   flexDirection: "column",
@@ -316,7 +319,7 @@ const SearchKeywordPage = () => {
         <Typography variant='h1' sx={{margin: "24px 0"}}>Albums</Typography>
         <Grid container sx={{width: "100%"}}>
           {slicedAlbumData?.map((item, index) => (
-            <Grid size={{xs: 6, sm: 4, md: 2}} key={index}>
+            <Grid size={{xs: 6, sm:4, md:3, lg: 2}} key={index}>
               <Card image={item.images?.[0]?.url} name={item.name} artistName={item.artists[0].name} />
             </Grid>
           ))
