@@ -8,6 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import Loading from '../../../common/components/Loading';
 import { styled, useMediaQuery, useTheme } from '@mui/system';
 import MobilePlaylistItem from './MobilePlaylistItem';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 export const TableBox = styled(Box)({
   overflowY: "auto",
@@ -22,7 +23,7 @@ export const TableBox = styled(Box)({
 const PlaylistDetailTracks = () => {
   //화면 breakpoint
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
   const {id} = useParams<{id: string}>();
   const {data: playlistItems, hasNextPage, isFetchingNextPage, fetchNextPage} = useGetPlaylistItems({playlist_id: id ?? "", limit: PAGE_LIMIT, offset: 0 });
@@ -48,7 +49,8 @@ const PlaylistDetailTracks = () => {
       <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
         <Table stickyHeader sx={{
           [`& .${tableCellClasses.root}`]: {
-            borderBottom: "none"
+            borderBottom: "none",
+            padding: "10px"
           }
         }}>
           <TableHead>
@@ -56,7 +58,7 @@ const PlaylistDetailTracks = () => {
               <TableRow>
                 <TableCell>#</TableCell>
                 <TableCell>Track</TableCell>
-                <TableCell>Duration</TableCell>
+                <TableCell><AccessTimeIcon fontSize='small'/></TableCell>
               </TableRow>
             ) : (
               <TableRow>
@@ -64,7 +66,7 @@ const PlaylistDetailTracks = () => {
                 <TableCell>Title</TableCell>
                 <TableCell>Album</TableCell>
                 <TableCell>Date Added</TableCell>
-                <TableCell>Duration</TableCell>
+                <TableCell><AccessTimeIcon fontSize='small'/></TableCell>
               </TableRow>
             )}
           </TableHead>

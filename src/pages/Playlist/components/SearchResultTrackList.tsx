@@ -53,7 +53,7 @@ const SearchResultTrackList = ({
 }: SearchResultTrackListProps) => {
   //화면 breakpoint
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   //무한스크롤
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -91,7 +91,8 @@ const SearchResultTrackList = ({
         stickyHeader
         sx={{
           [`& .${tableCellClasses.root}`]: {
-            borderBottom: "none"
+            borderBottom: "none",
+            padding: "10px",
           }
         }}
         >
@@ -106,14 +107,38 @@ const SearchResultTrackList = ({
                     />
                   </PlaylistImgBox>
                 </TableCell>
-                <TableCell>
-                  <Typography variant="h2" sx={{textOverflow: 'ellipsis'}}>{track.name}</Typography>
-                  <Typography variant="body2" sx={{ color: '#b3b3b3' }}>
+                <TableCell sx={{
+                  [theme.breakpoints.down("sm")]: { 
+                    maxWidth: "187px"
+                  },
+                  [theme.breakpoints.up("sm")]: { 
+                    maxWidth: "200px"
+                  }
+                  }}>
+                  <Typography
+                  noWrap
+                  variant="h2"
+                  sx={{
+                    maxWidth: '100%',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    }}>{track.name}</Typography>
+                  <Typography
+                  noWrap
+                  variant="body2"
+                  sx={{
+                    color: '#b3b3b3',
+                    maxWidth: '100%',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    }}>
                     {track.artists?.[0]?.name || 'Unknown Artist'}
                   </Typography>
                 </TableCell>
                 {!isMobile && (
-                  <TableCell>
+                  <TableCell sx={{maxWidth: "200px"}}>
                   <Typography noWrap variant="body2">{track.album?.name || 'Unknown Album'}</Typography>
                 </TableCell>
                 )}

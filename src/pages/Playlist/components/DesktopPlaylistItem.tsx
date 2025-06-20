@@ -1,7 +1,8 @@
 import React from 'react'
 import { PlaylistTrack } from '../../../models/playlist';
-import { TableCell, tableCellClasses, TableRow } from '@mui/material';
+import { TableCell, tableCellClasses, TableRow, Typography } from '@mui/material';
 import { Episode, Track } from '../../../models/track';
+import theme from '../../../theme';
 
 //타입 정의하기
 interface DesktopPlaylistItemProps {
@@ -26,15 +27,83 @@ const DesktopPlaylistItem = ({item, index}: DesktopPlaylistItemProps) => {
     <TableRow hover sx={{
       cursor: "pointer",
       border: "none",
+      width: "100%"
       }}>
       <TableCell>{index}</TableCell>
-      <TableCell>{item.track.name || "No Name"}</TableCell>
-      <TableCell>{isEpisode(item.track) ? "N/A" : item.track.album?.name}</TableCell>
-      <TableCell>{item.added_at?.slice(0, 10) || "Unknown"}</TableCell>
+      <TableCell sx={{
+        [theme.breakpoints.down("xl")]: { 
+          maxWidth: "210px"
+        },
+        [theme.breakpoints.down("lg")]: { 
+          maxWidth: "180px"
+        },
+      }}>
+        <Typography
+        variant='body1'
+        sx={{
+          maxWidth: '100%',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+        }}
+        >
+          {item.track.name || "No Name"}
+        </Typography>
+      </TableCell>
+      <TableCell sx={{
+        [theme.breakpoints.down("xl")]: { 
+          maxWidth: "210px"
+        },
+        [theme.breakpoints.down("lg")]: { 
+          maxWidth: "180px"
+        },
+      }}>
+        <Typography
+        variant='body1'
+        sx={{
+          maxWidth: '100%',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+        }}
+        >
+          {isEpisode(item.track) ? "N/A" : item.track.album?.name}
+        </Typography>
+      </TableCell>
+      <TableCell sx={{
+        [theme.breakpoints.down("xl")]: { 
+          maxWidth: "210px"
+        },
+        [theme.breakpoints.down("lg")]: { 
+          maxWidth: "180px"
+        },
+      }}>
+        <Typography
+        variant='body1'
+        sx={{
+          maxWidth: '100%',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+        }}
+        >
+          {item.added_at?.slice(0, 10) || "Unknown"}
+        </Typography>
+      </TableCell>
       <TableCell>
-        {item.track.duration_ms !== undefined
-      ? changeIntoMinuteSeconds(item.track.duration_ms)
-      : "Unknown"}
+        <Typography
+        variant='body1'
+        sx={{
+          maxWidth: '100%',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+        }}
+        >
+          {item.track.duration_ms !== undefined
+        ? changeIntoMinuteSeconds(item.track.duration_ms)
+        : "Unknown"}
+        </Typography>
       </TableCell>
     </TableRow>
   )

@@ -70,7 +70,7 @@ const Library = () => {
         {data?.pages.map((page, index) => (
           <UserPlaylist playlists={page.items} key={index} />
         ))}
-        <div ref={ref}>{isFetchingNextPage && <CircularProgress size="30px" />}</div>
+        <div ref={ref}>{isFetchingNextPage && <CircularProgress size="30px" sx={{textAlign: "center"}} />}</div>
       </ScrollBox>
       )}
     </LibraryContainer>

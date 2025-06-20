@@ -15,7 +15,7 @@ const PlaylistHeaderBox = styled(Grid)(({theme}) => ({
   minWidth: 0,
   flexWrap: "nowrap",
   [theme.breakpoints.down("sm")]: { 
-    padding: "10px",
+    padding: "16px",
     flexWrap: "wrap",
     flexDirection: "column",
     alignItems: "center"
