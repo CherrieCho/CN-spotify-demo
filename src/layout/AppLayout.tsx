@@ -109,7 +109,9 @@ const AppLayout = () => {
           margin: 0
         }
         }}>
-        <Navbar />
+        <Box sx={{flexShrink: 0}}>
+          <Navbar />
+        </Box>
         <Box sx={{
           flex: 1,
           overflowY: 'auto',
