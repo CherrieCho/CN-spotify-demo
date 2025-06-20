@@ -10,7 +10,8 @@ import { styled, useMediaQuery, useTheme } from '@mui/system';
 import MobilePlaylistItem from './MobilePlaylistItem';
 
 export const TableBox = styled(Box)({
-  overflow: "auto",
+  overflowY: "auto",
+  overflowX: 'hidden',
   maxHeight: "100%",
   '&::-webkit-scrollbar': {
     display: "none"
