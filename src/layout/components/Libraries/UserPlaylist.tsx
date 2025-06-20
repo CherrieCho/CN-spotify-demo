@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box } from '@mui/material';
-import { SimplifiedPlaylist } from '../../models/playlist';
-import PlaylistItem from '../../common/components/PlaylistItem';
 import { useNavigate, useParams } from 'react-router';
+import { SimplifiedPlaylist } from '../../../models/playlist';
+import PlaylistItem from '../../../common/components/PlaylistItem';
 
 //타입 정의
 interface UserPlaylistProps {

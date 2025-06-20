@@ -1,13 +1,11 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import React from "react";
 
 const Loading = () => {
   return (
-    <div>
-      <div className="container loading-container">
+      <Box sx={{height: "100vh", maxWidth: "100%", overflowX: "hidden", display: "flex", justifyContent: "center", alignItems: 'center'}}>
         <CircularProgress sx={{color: "#1ed760"}} />
-      </div>
-    </div>
+      </Box>
   );
 };
 

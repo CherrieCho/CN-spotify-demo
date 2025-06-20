@@ -7,7 +7,8 @@ import Loading from '../../../common/components/Loading';
 import SearchIcon from '@mui/icons-material/Search';
 import { PAGE_LIMIT } from '../../../config/commonConfig';
 import { useInView } from 'react-intersection-observer';
-import { ScrollBox } from '../../../layout/components/Library';
+import { ScrollBox } from '../../../layout/components/Libraries/Library';
+import theme from '../../../theme';
 
 export const ScrollContainer = styled(Box)({
   marginTop: "20px",
@@ -19,11 +20,14 @@ export const ScrollContainer = styled(Box)({
   },
 })
 
-const SearchbarContainer = styled(Box)({
+const SearchbarContainer = styled(Box)(({theme}) => ({
   padding: "10px 0",
   marginTop: "20px",
   maxWidth: "450px",
-});
+  [theme.breakpoints.down("sm")]: { 
+    marginTop: "10px",
+  }
+}));
 
 const SearchMusic = () => {
   const [keyword, setKeyword] = useState<string>("");
@@ -46,12 +50,22 @@ const SearchMusic = () => {
   return (
     <Box sx={{ height: "100%", width: "100%", display: "flex", flexDirection: "column" }}>
       <SearchbarContainer>
-        <Typography variant='h1' sx={{marginBottom: "0.8em"}}>Let's find something for your playlist</Typography>
+        <Typography
+        variant='h1'
+        sx={{
+          marginBottom: "0.8em",
+          [theme.breakpoints.down("sm")]: { 
+            display: "none"
+          }
+          }}>
+          Let's find something for your playlist
+        </Typography>
         <TextField 
         fullWidth
         size='small'
         value={keyword}
         onChange={handleSearchKeyword}
+        placeholder='Search Music'
         sx={{"& fieldset": {border: "none"}, backgroundColor: "#282828"}}
         slotProps={{
           input: {

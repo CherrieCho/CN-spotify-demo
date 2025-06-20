@@ -1,6 +1,6 @@
 import React from 'react'
 import { Playlist } from '../../../models/playlist'
-import { Grid, styled } from '@mui/system';
+import { alignItems, flexDirection, flexWrap, Grid, justifyContent, styled } from '@mui/system';
 import { Typography } from '@mui/material';
 import theme from '../../../theme';
 
@@ -8,13 +8,19 @@ interface PlaylistDataProps {
   data: Playlist;
 }
 
-const PlaylistHeaderBox = styled(Grid)({
+const PlaylistHeaderBox = styled(Grid)(({theme}) => ({
   padding: "2em",
   backgroundColor: "black",
   borderRadius: "8px 8px 0 0",
   minWidth: 0,
   flexWrap: "nowrap",
-});
+  [theme.breakpoints.down("sm")]: { 
+    padding: "10px",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    alignItems: "center"
+  }
+}));
 
 const PlaylistImageBox = styled(Grid)(({theme}) => ({
   display: "flex",
@@ -27,15 +33,24 @@ const PlaylistImageBox = styled(Grid)(({theme}) => ({
   [theme.breakpoints.down("lg")]: {
     width: "150px",
   },
+  [theme.breakpoints.down("sm")]: {
+    width: "120px",
+  },
 }));
 
-const PlaylistDescriptionBox = styled(Grid)({
+const PlaylistDescriptionBox = styled(Grid)(({theme}) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
   gap: "1em",
-  minWidth: 0
-});
+  minWidth: 0,
+  [theme.breakpoints.down("sm")]: { 
+    alignItems: "flex-start",
+    textAlign: "left",
+    width: "100%",
+    paddingTop: "1em",
+  }
+}));
 
 const PlaylistDetailHeader = ({data}: PlaylistDataProps) => {
   //images가 없는경우 디폴트이미지

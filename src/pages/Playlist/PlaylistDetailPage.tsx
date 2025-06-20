@@ -7,26 +7,31 @@ import PlaylistDetailHeader from './components/PlaylistDetailHeader';
 import PlaylistDetailTracks from './components/PlaylistDetailTracks';
 import NoPlaylistData from '../../common/components/NoPlaylistData';
 import SearchMusic from './components/SearchMusic';
+import Loading from '../../common/components/Loading';
 
-const PlaylistDetailContainer = styled(Box)({
+const PlaylistDetailContainer = styled(Box)(({theme}) => ({
   height: "100%",
   padding: "16px",
   paddingTop: "2em",
   minWidth: 0,
   overflow: "hidden",
   display: "flex",
-  flexDirection: "column"
-});
+  flexDirection: "column",
+  [theme.breakpoints.down("sm")]: { 
+    padding: 0
+  }
+}));
 
 const PlaylistDetailPage = () => {
   const {id} = useParams<{id: string}>();
 
-  const {data: playlistData} = useGetPlaylist({playlist_id: id ?? ""});
+  const {data: playlistData, isLoading} = useGetPlaylist({playlist_id: id ?? ""});
 
-  console.log("플레", playlistData);
+    // if(isLoading) return <Loading />
 
   //playlist id가 undefined일 경우?
   if(id === undefined || !playlistData) return <NoPlaylistData />;
+
   return (
     <PlaylistDetailContainer>
       <PlaylistDetailHeader data={playlistData} />

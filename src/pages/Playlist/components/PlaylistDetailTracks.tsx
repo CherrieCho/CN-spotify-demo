@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import useGetPlaylistItems from '../../../hooks/useGetPlaylistItems'
 import { useParams } from 'react-router';
-import { Box, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from '@mui/material';
+import { Box, CircularProgress, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from '@mui/material';
 import DesktopPlaylistItem from './DesktopPlaylistItem';
 import { PAGE_LIMIT } from '../../../config/commonConfig';
 import { useInView } from 'react-intersection-observer';
 import Loading from '../../../common/components/Loading';
-import { styled } from '@mui/system';
+import { styled, useMediaQuery, useTheme } from '@mui/system';
+import MobilePlaylistItem from './MobilePlaylistItem';
 
 export const TableBox = styled(Box)({
   overflow: "auto",
@@ -18,6 +19,10 @@ export const TableBox = styled(Box)({
 
 
 const PlaylistDetailTracks = () => {
+  //화면 breakpoint
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
   const {id} = useParams<{id: string}>();
   const {data: playlistItems, hasNextPage, isFetchingNextPage, fetchNextPage} = useGetPlaylistItems({playlist_id: id ?? "", limit: PAGE_LIMIT, offset: 0 });
 
@@ -38,37 +43,50 @@ const PlaylistDetailTracks = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <TableBox ref={containerRef} sx={{maxHeight: "100%"}}>
-      <Table stickyHeader sx={{
-        [`& .${tableCellClasses.root}`]: {
-          borderBottom: "none"
-        }
-      }}>
-        <TableHead>
-          <TableRow>
-            <TableCell>#</TableCell>
-            <TableCell>Title</TableCell>
-            <TableCell>Album</TableCell>
-            <TableCell>Date Added</TableCell>
-            <TableCell>Duration</TableCell>
-          </TableRow>
-        </TableHead>
+    <TableBox ref={containerRef} >
+      <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+        <Table stickyHeader sx={{
+          [`& .${tableCellClasses.root}`]: {
+            borderBottom: "none"
+          }
+        }}>
+          <TableHead>
+            {isMobile ? (
+              <TableRow>
+                <TableCell>#</TableCell>
+                <TableCell>Track</TableCell>
+                <TableCell>Duration</TableCell>
+              </TableRow>
+            ) : (
+              <TableRow>
+                <TableCell>#</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Album</TableCell>
+                <TableCell>Date Added</TableCell>
+                <TableCell>Duration</TableCell>
+              </TableRow>
+            )}
+          </TableHead>
 
-        <TableBody>
-          {playlistItems?.pages.map((page, pageIndex) => page.items.map((item, itemIndex) => {
-            return <DesktopPlaylistItem
-            item={item}
-            key={pageIndex * PAGE_LIMIT + itemIndex + 1}
-            // 노래 넘버링용 인덱스 prop
-            index={pageIndex * PAGE_LIMIT + itemIndex + 1}/>
-          }))}
-          <TableRow ref={ref} sx={{ height: '20px', border: "none" }}>
-            <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
-              {isFetchingNextPage && <Loading />}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          <TableBody>
+            {playlistItems?.pages.map((page, pageIndex) =>
+              page.items.map((item, itemIndex) => {
+                const index = pageIndex * PAGE_LIMIT + itemIndex + 1; // 노래 넘버링용 인덱스 prop 
+                return isMobile ? (
+                  <MobilePlaylistItem item={item} key={index} index={index} />
+                ) : (
+                  <DesktopPlaylistItem item={item} key={index} index={index} />
+                );
+              })
+            )}
+            <TableRow ref={ref} sx={{ height: '20px', border: "none" }}>
+              <TableCell colSpan={4} sx={{ textAlign: 'center', width: "100%", overflowX: 'hidden', }}>
+                {isFetchingNextPage && <CircularProgress size="30px" />}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Box>
     </TableBox>
   )
 }

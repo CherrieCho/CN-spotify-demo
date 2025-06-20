@@ -1,6 +1,7 @@
 import { Box, styled, Typography, Button } from '@mui/material';
 import React from 'react'
-import { getSpotifyAuthUrl } from '../../utils/auth';
+import { getSpotifyAuthUrl } from '../../../utils/auth';
+
 
 const CreatePlaylistBox = styled(Box)(({theme}) => ({
   borderRadius: "8px",

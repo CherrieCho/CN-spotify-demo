@@ -4,6 +4,8 @@ import SearchKeywordPage from './pages/Search/SearchKeywordPage';
 import PlaylistDetailPage from './pages/Playlist/PlaylistDetailPage';
 import Loading from './common/components/Loading';
 import useExchangeToken from './hooks/useExchangeToken';
+import MobileLibraryPage from './layout/components/Libraries/MobileLibraryPage';
+import ProtectedMobileRoute from './common/components/ProtectedMobileRoute';
 
 //lazyLoading
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
@@ -35,6 +37,14 @@ function App() {
         <Route path="search">
           <Route index element={<SearchPage />} />
           <Route path=":keyword" element={<SearchKeywordPage />} />
+        </Route>
+
+        <Route path="library">
+          <Route index element={
+            <ProtectedMobileRoute>
+              <MobileLibraryPage />
+            </ProtectedMobileRoute>
+            } />
         </Route>
 
         <Route path="playlist">

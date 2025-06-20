@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Box, Button, IconButton, Snackbar, SnackbarCloseReason, styled, Typography } from '@mui/material'
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AddIcon from '@mui/icons-material/Add';
-import useCreatePlaylist from '../../hooks/useCreatePlaylist';
-import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
+import useCreatePlaylist from '../../../hooks/useCreatePlaylist';
+import useGetCurrentUserProfile from '../../../hooks/useGetCurrentUserProfile';
 import CloseIcon from '@mui/icons-material/Close';
 
 //styled component

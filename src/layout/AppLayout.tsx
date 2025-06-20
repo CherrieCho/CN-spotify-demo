@@ -3,7 +3,7 @@ import { NavLink, Outlet } from 'react-router'
 import { Box, styled, Typography } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
-import Library from './components/Library';
+import Library from './components/Libraries/Library';
 import Navbar from './components/Navbar';
 import theme from '../theme';
 import MobileMenu from './components/MobileMenu';

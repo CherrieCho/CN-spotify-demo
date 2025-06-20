@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import LibraryHead from './LibraryHead'
 import EmptyPlaylist from './EmptyPlaylist'
-import { Box, styled } from '@mui/material';
-import useGetCurrentUserPlaylist from '../../hooks/useGetCurrentUserPlaylist';
+import { Box, CircularProgress, styled } from '@mui/material';
+import useGetCurrentUserPlaylist from '../../../hooks/useGetCurrentUserPlaylist';
 import UserPlaylist from './UserPlaylist';
-import Loading from '../../common/components/Loading';
-import ErrorMessage from '../../common/components/ErrorMessage';
-import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
+import Loading from '../../../common/components/Loading';
+import ErrorMessage from '../../../common/components/ErrorMessage';
+import useGetCurrentUserProfile from '../../../hooks/useGetCurrentUserProfile';
 import { useInView } from 'react-intersection-observer';
-import { PAGE_LIMIT } from '../../config/commonConfig';
+import { PAGE_LIMIT } from '../../../config/commonConfig';
 
 const LibraryContainer = styled("div")({
   display: "flex",
@@ -70,7 +70,7 @@ const Library = () => {
         {data?.pages.map((page, index) => (
           <UserPlaylist playlists={page.items} key={index} />
         ))}
-        <div ref={ref}>{isFetchingNextPage && <Loading />}</div>
+        <div ref={ref}>{isFetchingNextPage && <CircularProgress size="30px" />}</div>
       </ScrollBox>
       )}
     </LibraryContainer>

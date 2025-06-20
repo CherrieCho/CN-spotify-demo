@@ -9,6 +9,8 @@ import {
   Button,
   styled,
   tableCellClasses,
+  useTheme,
+  CircularProgress,
 } from '@mui/material';
 import { Track } from '../../../models/track';
 import { useInView } from 'react-intersection-observer';
@@ -17,6 +19,7 @@ import { PlaylistImgBox } from '../../../common/components/PlaylistItem';
 
 import { useParams } from 'react-router';
 import useAddTrack from '../../../hooks/useAddTrack';
+import { Box, useMediaQuery } from '@mui/system';
 
 interface SearchResultTrackListProps {
   list: Track[];
@@ -27,11 +30,13 @@ interface SearchResultTrackListProps {
 
 const StyledTableContainer = styled(TableContainer)({
   minHeight: 0,
-  maxHeight: "100%"
-  // scrollbarWidth: 'none',
-  // '&::-webkit-scrollbar': {
-  //   display: 'none',
-  // },
+  maxHeight: "100%",
+  overflow: 'auto',
+  overflowX: "hidden",
+  scrollbarWidth: 'none',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 });
 
 const StyledImg = styled('img')({
@@ -46,6 +51,10 @@ const SearchResultTrackList = ({
   hasNextPage,
   fetchNextPage,
 }: SearchResultTrackListProps) => {
+  //화면 breakpoint
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   //무한스크롤
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -76,47 +85,59 @@ const SearchResultTrackList = ({
   }
 
   return (
-    <StyledTableContainer ref={containerRef} sx={{ maxHeight: "100%", overflow: 'auto' }}>
-      <Table
-      stickyHeader
-      sx={{
-        [`& .${tableCellClasses.root}`]: {
-          borderBottom: "none"
-        }
-      }}
-      >
-        <TableBody>
-          {list.map((track, index) => (
-            <TableRow key={index} hover sx={{cursor: "pointer"}}>
-              <TableCell>
-                <PlaylistImgBox>
-                  <StyledImg
-                    src={track.album?.images[track.album.images.length - 1]?.url || ''}
-                    alt="album-cover"
-                  />
-                </PlaylistImgBox>
-              </TableCell>
-              <TableCell>
-                <Typography variant="h2">{track.name}</Typography>
-                <Typography variant="body2" sx={{ color: '#b3b3b3' }}>
-                  {track.artists?.[0]?.name || 'Unknown Artist'}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="body2">{track.album?.name || 'Unknown Album'}</Typography>
-              </TableCell>
-              <TableCell>
-                <Button variant="outlined" onClick={() => addMusicToPlaylist(track.uri)}>Add</Button>
+    <StyledTableContainer ref={containerRef}>
+      <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+        <Table
+        stickyHeader
+        sx={{
+          [`& .${tableCellClasses.root}`]: {
+            borderBottom: "none"
+          }
+        }}
+        >
+          <TableBody>
+            {list.map((track, index) => (
+              <TableRow key={index} hover sx={{cursor: "pointer"}}>
+                <TableCell>
+                  <PlaylistImgBox>
+                    <StyledImg
+                      src={track.album?.images[track.album.images.length - 1]?.url || ''}
+                      alt="album-cover"
+                    />
+                  </PlaylistImgBox>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="h2" sx={{textOverflow: 'ellipsis'}}>{track.name}</Typography>
+                  <Typography variant="body2" sx={{ color: '#b3b3b3' }}>
+                    {track.artists?.[0]?.name || 'Unknown Artist'}
+                  </Typography>
+                </TableCell>
+                {!isMobile && (
+                  <TableCell>
+                  <Typography noWrap variant="body2">{track.album?.name || 'Unknown Album'}</Typography>
+                </TableCell>
+                )}
+                <TableCell>
+                  <Button variant="outlined" onClick={() => addMusicToPlaylist(track.uri)}>Add</Button>
+                </TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell
+              colSpan={4}
+              ref={endRef}
+              sx={{
+                textAlign: 'center',
+                width: "100%",
+                overflowX: 'hidden',
+              }}
+                >
+                {isFetchingNextPage && <CircularProgress size="30px" />}
               </TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell colSpan={4} ref={endRef} sx={{ textAlign: 'center' }}>
-              {isFetchingNextPage && <Loading />}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      </Box>
     </StyledTableContainer>
   );
 };
