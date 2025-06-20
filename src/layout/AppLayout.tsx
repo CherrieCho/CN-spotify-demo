@@ -34,7 +34,8 @@ const BottomBar = styled("div")(({theme}) => ({
     display: "none"
   },
   [theme.breakpoints.down("sm")]: { 
-    display: "block"
+    display: "block",
+    flexShrink: 0
   }
 }));
 
