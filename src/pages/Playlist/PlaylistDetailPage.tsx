@@ -12,7 +12,6 @@ import Loading from '../../common/components/Loading';
 const PlaylistDetailContainer = styled(Box)(({theme}) => ({
   height: "100%",
   padding: "16px",
-  paddingTop: "2em",
   minWidth: 0,
   overflow: "hidden",
   display: "flex",

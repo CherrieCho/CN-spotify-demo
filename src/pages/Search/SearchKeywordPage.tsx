@@ -86,7 +86,6 @@ const SearchKeywordPage = () => {
   });
   // 모든 페이지의 플리를 가져오기
   const allPlaylists = userPlaylistData?.pages.flatMap((page) => page?.items || []) || [];
-  console.log("내 플리", allPlaylists)
   
   //플레이리스트 무한스크롤
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -169,7 +168,6 @@ const SearchKeywordPage = () => {
   q: keyword ?? "",
   type: [SEARCH_TYPE.Track, SEARCH_TYPE.Album, SEARCH_TYPE.Artist],
   });
-  console.log(`${keyword} 에 대한 검색결과`, data)
 
   //데이터 필터링
   const trackData = data?.tracks?.items;

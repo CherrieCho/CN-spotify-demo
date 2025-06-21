@@ -25,7 +25,7 @@ const EmptyPlaylist = () => {
         it's easy, we'll help you
       </Typography>
       <Button variant='contained' color='secondary' size='medium' onClick={login} sx={{marginTop: "20px", fontWeight: "700"}}>
-        Create Playlist
+        Sign in to Spotify
       </Button>
     </CreatePlaylistBox>
   )

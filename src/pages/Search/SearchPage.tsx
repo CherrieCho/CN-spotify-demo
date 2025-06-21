@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid, Skeleton, Typography } from '@mui/material'
 import { styled } from '@mui/system';
 import React from 'react'
 import useGetBrowseCategories from '../../hooks/useGetBrowseCategories';
@@ -62,10 +62,32 @@ const SearchPage = () => {
   limit: 40,
   offset: 0,
   });
-  console.log("카테고리", categoryData?.categories.items)
+
+  const skeletonArray = Array.from({ length: 40 }) // 로딩 시 보여줄 스켈레톤 개수
 
   if(isLoading){
-    return <Loading />
+    return (
+      <SearchPageContainer>
+        <Grid container spacing={2} sx={{overflow: "hidden"}}>
+          {skeletonArray.map((item, index) => {
+          return (
+          <Grid
+          size={{xs: 12, sm: 6, md: 4}}
+          key={index}
+          sx={{
+            paddingLeft: "16px",
+            paddingTop: "16px",
+            [theme.breakpoints.down("md")]: { 
+              padding: 0
+            }
+            }}>
+            <Skeleton variant='rounded' width="100%" height="100%" animation="wave" sx={{paddingBottom: "56.25%"}}/>
+          </Grid>
+          )
+        })}
+        </Grid>
+      </SearchPageContainer>
+    )
   }
 
   return (

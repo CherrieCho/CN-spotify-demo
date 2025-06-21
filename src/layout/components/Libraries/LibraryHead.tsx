@@ -55,7 +55,7 @@ const LibraryHead = () => {
     <PlaylistHeader>
       <Box sx={{display: "flex", alignItems: "center", gap: "20px"}}>
         <BookmarkIcon />
-        <Typography noWrap variant='h2' fontWeight={700}>Your Library</Typography>
+        <Typography noWrap variant='h2' fontWeight={700}>My Library</Typography>
       </Box>
       <Button onClick={handleCreatePlaylist}>
         <AddIcon sx={{ color: "#1ed760" }} />

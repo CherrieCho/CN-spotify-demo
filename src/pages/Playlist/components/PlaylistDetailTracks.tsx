@@ -28,8 +28,6 @@ const PlaylistDetailTracks = () => {
   const {id} = useParams<{id: string}>();
   const {data: playlistItems, hasNextPage, isFetchingNextPage, fetchNextPage} = useGetPlaylistItems({playlist_id: id ?? "", limit: PAGE_LIMIT, offset: 0 });
 
-  console.log("트랙정보", playlistItems);
-
   //무한스크롤
   const containerRef = useRef<HTMLDivElement | null>(null);
 

@@ -37,8 +37,6 @@ const SearchMusic = () => {
     limit: PAGE_LIMIT,
     offset: 0
   });
-  console.log("검색결과", data);
-  console.log("키워드", keyword);
 
   const handleSearchKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
